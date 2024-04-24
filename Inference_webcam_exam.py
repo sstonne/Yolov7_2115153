@@ -1,7 +1,7 @@
 # Inference for ONNX model
 
 import cv2
-import tensorflow.compat.v1 as tf
+import tensorflow as tf
 tf.disable_eager_execution()
 cuda = True
 w = "yolov7-tiny.onnx"
@@ -19,11 +19,8 @@ from collections import OrderedDict,namedtuple
 providers = ['CUDAExecutionProvider', 'CPUExecutionProvider'] if cuda else ['CPUExecutionProvider'] #['AzureExecutionProvider', 'CPUExecutionProvider'] if cuda else ['CPUExecutionProvider']
 session = ort.InferenceSession(w, providers=providers)
 
-with tf.Session() as sess:
-    x = tf.placeholder(tf.float32, [2])
-    x2 = tf.square(x)
-    print(sess.run(x2, feed_dict={x: [2, 3]}))
-    # [4. 9.]
+x = tf.constant([2.0,3.0])
+x2 = tf.square(x)
 
 #print("00000")
 
